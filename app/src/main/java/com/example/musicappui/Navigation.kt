@@ -19,7 +19,7 @@ import com.example.musicappui.ui.theme.Subscription
 fun Navigation(navController: NavController, viewModel: MainViewModel, pd: PaddingValues){
 
     NavHost(navController = navController as NavHostController, startDestination =
-    Screen.DrawerScreen.Account.route, modifier = Modifier.padding(pd)){
+    Screen.BottomScreen.Home.bRoute, modifier = Modifier.padding(pd)){
 
         composable(Screen.BottomScreen.Home.bRoute){
           HomeView()

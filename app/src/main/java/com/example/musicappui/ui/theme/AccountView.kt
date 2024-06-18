@@ -17,41 +17,91 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.Alignment
 import com.example.musicappui.R
 
 @Composable
-fun AccountView(){
-
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp)) {
-        Row(modifier = Modifier.fillMaxWidth().padding(end = 8.dp),Arrangement.SpaceBetween) {
-            Row {
+fun AccountView() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+            .background(
+                color = MaterialTheme.colorScheme.surface,
+                shape = RoundedCornerShape(8.dp)
+            )
+            .padding(horizontal = 16.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
-                    contentDescription = "Account", Modifier.padding(8.dp)
+                    contentDescription = "Account",
+                    modifier = Modifier
+                        .size(48.dp)
+                        .padding(8.dp),
+                    tint = MaterialTheme.colorScheme.primary
                 )
                 Column {
-                    Text(text = "NAME")
-                    Text(text = "EMAIL")
+                    Text(
+                        text = "NAME",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Text(
+                        text = "EMAIL",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    )
                 }
             }
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    contentDescription = null)
-
+            IconButton(
+                onClick = { /* TODO */ },
+                modifier = Modifier.size(32.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                )
             }
         }
-        Row(modifier = Modifier.padding(top=16.dp)) {
-            Icon(painter = painterResource(id = R.drawable.baseline_music_video_24), contentDescription =null,Modifier.padding(start = 8.dp, end = 16.dp)
+
+        Row(
+            modifier = Modifier.padding(top = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.baseline_music_video_24),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(24.dp)
+                    .padding(start = 8.dp, end = 16.dp),
+                tint = MaterialTheme.colorScheme.primary
             )
-            Text(text = "My Music")
-            
+            Text(
+                text = "My Music",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface
+            )
         }
-        Divider(modifier = Modifier.padding(top = 8.dp))
 
+        Divider(
+            modifier = Modifier.padding(top = 8.dp),
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+        )
     }
-
-
 }

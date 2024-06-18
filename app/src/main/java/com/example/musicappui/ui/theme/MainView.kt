@@ -1,6 +1,10 @@
 package com.example.musicappui.ui.theme
 
+import androidx.annotation.ColorRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,7 +38,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material.TopAppBar
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -42,9 +46,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -95,7 +102,7 @@ fun MainView(){
 
     val bottombar:@Composable () -> Unit ={
         if(currentScreen is Screen.DrawerScreen||currentScreen==Screen.BottomScreen.Home){
-          BottomNavigation(modifier = Modifier.wrapContentSize()) {
+          BottomNavigation(modifier = Modifier.wrapContentSize(), backgroundColor = colorResource(id = R.color.app_bar)) {
            screenInBottom.forEach { item ->
                val isSelected=currentRoute==item.bRoute
                val tint=if(isSelected) Color.White else Color.Black
@@ -108,8 +115,8 @@ fun MainView(){
                        )
                    },
                    label = { Text(text = item.bTitle, color = tint) },
-                   selectedContentColor = Color.White,
-                   unselectedContentColor = Color.Black
+                   selectedContentColor = colorResource(id = R.color.bottom_bar_selected),
+                   unselectedContentColor = Color.White
                )
            }
 
@@ -118,13 +125,14 @@ fun MainView(){
 
 
     }
-    ModalBottomSheetLayout(sheetState=sheetState,
+    ModalBottomSheetLayout(sheetState=sheetState, sheetBackgroundColor = colorResource(id = R.color.app_bar),
         sheetShape = RoundedCornerShape(topStart = roundedcornerradius, topEnd = roundedcornerradius),
         sheetContent = {
        MoreBottomSheet(modifier =modifier )
     }) {
         Scaffold(bottomBar = bottombar, topBar = {
-            TopAppBar(title = { Text(text = title.value)},
+            TopAppBar(title = { Text(text = title.value,color=Color.White)},
+                backgroundColor = colorResource(id =R.color.app_bar),
                 actions = {
                           IconButton(onClick = { scope.launch {
                               if(sheetState.isVisible) sheetState.hide()
@@ -194,10 +202,16 @@ fun DrawerItem(
     Row(modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 8.dp, vertical = 16.dp)
-        .background(background)
+        .border(
+            width = 4.dp,
+            color = if (selected) colorResource(id = R.color.app_bar) else Color.White,
+            shape = RoundedCornerShape(25),
+
+        )
+
         .clickable {
             onDrawerItemClicked()
-        }
+        }.padding(8.dp)
     ) {
         Icon(
             painter = painterResource(id = item.Icon), contentDescription = item.dTitle,
@@ -212,7 +226,7 @@ fun DrawerItem(
 fun MoreBottomSheet(modifier: Modifier){
     Box(modifier = modifier
         .fillMaxWidth()
-        .background(MaterialTheme.colorScheme.primary)){
+        .background(colorResource(id = R.color.app_bar))){
         Column(modifier.padding(16.dp), verticalArrangement = Arrangement.SpaceBetween) {
             Row(modifier.padding(16.dp)) {
                 Icon(painter = painterResource(id = R.drawable.baseline_settings_24),
